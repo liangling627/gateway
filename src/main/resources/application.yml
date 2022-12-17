@@ -5,8 +5,8 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: web                  # 服务名
-          uri: lb://web            # lb为负载均衡 web为routes中id名称
+        - id: webName                  # 服务名
+          uri: lb://web            # lb为负载均衡 web为实例的逻辑名称
           predicates:
             - Path=/myweb1/**
           filters:
@@ -22,7 +22,7 @@ spring:
       client:
         simple:
           instances:
-            web:                  #为routes中ID名称
+            web:                  #为routes中uri的 web为实例的逻辑名称
               - uri: http://localhost:81  # 实例1
               - uri: http://localhost:82  # 实例2
 

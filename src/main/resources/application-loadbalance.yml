@@ -2,27 +2,27 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: web                  # 服务名
-          uri: lb://web            # lb为负载均衡 web为routes中id名称
+        - id: webName                  # 服务名
+          uri: lb://web            # lb为负载均衡 web为实例的逻辑名称
           predicates:
             - Path=/myweb1/**
           filters:
             - StripPrefix=1        # 去掉path中第一级路径 去掉后为/**
             - PrefixPath=/myweb    # 在/**路径前增加/myweb，增加后的路径为/myweb/**
 
-# 测试地址：http://localhost:8080/myweb1/test/index
+    # 测试地址：http://localhost:8080/myweb1/test/index
     loadbalance:
       ribbon:
-       - enabled:false              # 关闭 ribbon
+        - enabled:false              # 关闭 ribbon
 
     discovery:
       client:
         simple:
           instances:
-            web:                  #为routes中ID名称
-             - uri: http://localhost:81  # 实例1
-             - uri: http://localhost:82  # 实例2
+            web:                  #为routes中uri的 web为实例的逻辑名称
+              - uri: http://localhost:81  # 实例1
+              - uri: http://localhost:82  # 实例2
 
 logging:
-    level:
-     root:  DEBUG
+  level:
+    root:  DEBUG
