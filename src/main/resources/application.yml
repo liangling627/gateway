@@ -1,0 +1,37 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: web                  # ???? ???
+         #uri: http://localhost:81 # ??? ???
+          uri: lb://web            # lb ????????web ?id???
+          predicates:
+            - Path=/myweb1/**
+          filters:
+            - StripPrefix=1        # ??path????????? ??????/**
+            - PrefixPath=/myweb    # ?/** ?????? /myweb
+
+# ?????http://localhost:8080/myweb1/test/index
+
+      #  - id: web2
+      #   # uri: http://localhost:82
+      #    predicates:
+      #      - Path=/myweb2/**
+      #    filters:
+      #      - StripPrefix=1
+      #      - PrefixPath=/myweb
+    loadbalance:
+      ribbon:
+       - enabled:false              # ?? ribbon
+
+    discovery:
+      client:
+        simple:
+          instances:
+            web:                  #routes????ID??
+             - uri: http://localhost:81  # ???????1
+             - uri: http://localhost:82  # ???????2
+
+logging:
+    level:
+     root:  DEBUG
