@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: myweb1                  # 服务名
+          uri: http://localhost:81 # 单机服务地址
+          predicates:
+            - Path=/myweb1/**
+          filters:
+            - StripPrefix=1        # 去掉path中第一级路径 去掉后为/**
+            - PrefixPath=/myweb    # 在/**路径前增加/myweb，增加后的路径为/myweb/**
+
+# 测试地址：http://localhost:8080/myweb1/test/index
+logging:
+    level:
+     root:  DEBUG
